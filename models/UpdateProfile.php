@@ -61,9 +61,9 @@ class UpdateProfile extends Model
         $this->email == null ? : $user->email = $this->email;
         $this->password == null ? : $user->password = \Yii::$app->security->generatePasswordHash($this->password);
        
-        $this->date_of_birth == null ? : $user->profile->date_of_birth = $this->date_of_birth;
-        $this->about_me == null ? : $user->profile->about_me = $this->about_me;
-        $this->city == null ? : $user->profile->city = $this->city;
+        $user->profile->date_of_birth = $this->date_of_birth;
+        $user->profile->about_me = $this->about_me;
+        $user->profile->city = $this->city;
 
         if($user->save() && $user->profile->save() ){
             return true;
