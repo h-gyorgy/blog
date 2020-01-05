@@ -53,6 +53,17 @@ class UpdateProfile extends Model
         ];
     }
 
+    public function loadData($id){
+        
+        $user = User::findIdentity($id);
+
+        $this->oldUsername = $user->username;
+        $this->oldEmail = $user->email;
+        $this->date_of_birth = $user->profile->date_of_birth;
+        $this->city = $user->profile->city;
+        $this->about_me = $user->profile->about_me;
+    }
+
     public function updateProfile($id){
 
         $user = User::findIdentity($id);
