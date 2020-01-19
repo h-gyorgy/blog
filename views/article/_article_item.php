@@ -26,7 +26,7 @@ use \yii\helpers\Html;
     </p>
 
     <p class="text-muted" style='float: left'>
-        <?= count($article->comments)?>&nbsp;hozászólás
+        <?= $article->comment_count ?>&nbsp;hozzászólás
     </p>
    
     <div class="clearfix" style='height:3rem'></div>

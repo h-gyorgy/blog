@@ -11,6 +11,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
+use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -62,13 +64,21 @@ class ArticleController extends Controller
         $orderForm->selected = $orderby;
 
         $orderby = OrderForm::validateOrder($orderby);
+
+
+        $query = Article::find()->where(['is_public' => 1])->orderBy($orderby . ' DESC');
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
+        $articles = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
         
-        $articles = Article::find()->where(['is_public' => 1])->orderBy($orderby . ' DESC')->all();
+        //$articles = Article::find()->where(['is_public' => 1])->orderBy($orderby . ' DESC')->all();
        
         return $this->render('index', [
             'articles' => $articles,
             'orderForm' => $orderForm,
-            'orderby' => $orderby
+            'orderby' => $orderby,
+            'pages' => $pages,
         ]);
     }
 
